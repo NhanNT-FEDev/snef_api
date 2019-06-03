@@ -1,11 +1,9 @@
 package com.nhannt.snef.model;
 
-
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
-@Table(name = "product_item")
+@Table(name = "productitem")
 public class ProductItem {
 
     @Id
@@ -23,10 +21,10 @@ public class ProductItem {
     private String productitemname;
 
     @Column(name = "expireddate")
-    private Timestamp expireddate;
+    private String expireddate;
 
     @Column(name = "accountid")
-    private  int accountid;
+    private int accountid;
 
     @Column(name = "productid")
     private int productid;
@@ -34,8 +32,7 @@ public class ProductItem {
     public ProductItem() {
     }
 
-    public ProductItem(int productitemid ,int quantity, float price, String productitemname, Timestamp expireddate, int accountid, int productid) {
-        this.productitemid = productitemid;
+    public ProductItem(int quantity, float price, String productitemname, String expireddate, int accountid, int productid) {
         this.quantity = quantity;
         this.price = price;
         this.productitemname = productitemname;
@@ -76,11 +73,11 @@ public class ProductItem {
         this.productitemname = productitemname;
     }
 
-    public Timestamp getExpireddate() {
+    public String getExpireddate() {
         return expireddate;
     }
 
-    public void setExpireddate(Timestamp expireddate) {
+    public void setExpireddate(String expireddate) {
         this.expireddate = expireddate;
     }
 
