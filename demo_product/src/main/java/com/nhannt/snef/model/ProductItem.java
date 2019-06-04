@@ -1,38 +1,29 @@
 package com.nhannt.snef.model;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "productitem")
-public class ProductItem {
+import java.io.Serializable;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "productitemid")
+public class ProductItem implements Serializable {
+
     private int productitemid;
 
-    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "price")
     private float price;
 
-    @Column(name = "productitemname")
     private String productitemname;
 
-    @Column(name = "expireddate")
     private String expireddate;
 
-    @Column(name = "accountid")
     private int accountid;
 
-    @Column(name = "productid")
     private int productid;
 
     public ProductItem() {
     }
 
-    public ProductItem(int quantity, float price, String productitemname, String expireddate, int accountid, int productid) {
+    public ProductItem(int productitemid, int quantity, float price, String productitemname, String expireddate, int accountid, int productid) {
+        this.productitemid = productitemid;
         this.quantity = quantity;
         this.price = price;
         this.productitemname = productitemname;
