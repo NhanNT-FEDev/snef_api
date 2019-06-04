@@ -1,8 +1,9 @@
 package com.nhannt.snef.model;
 
 
+import java.io.Serializable;
 
-public class Product {
+public class Product implements Serializable {
 
     private int productid;
     private String productname;

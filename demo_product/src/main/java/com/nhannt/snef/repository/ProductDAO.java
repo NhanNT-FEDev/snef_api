@@ -5,6 +5,7 @@ import com.nhannt.snef.model.Product;
 import org.springframework.stereotype.Repository;
 
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,19 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ProductDAO {
-
-    private List<Product> listProduct;
-
-    public List<Product> getListProduct() {
-        return listProduct;
-    }
+public class ProductDAO implements Serializable {
 
     public List<Product> loadAllProduct() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        List<Product> products = new ArrayList<>();
         try {
             con = MyConnection.myConnection();
             if (con !=null){
@@ -40,10 +35,8 @@ public class ProductDAO {
                     int catId = rs.getInt("categoriesid");
 
                     Product dto = new Product(pro, proName, des, pic, catId);
-                    if (this.listProduct == null){
-                        this.listProduct = new ArrayList<>();
-                    }
-                    this.listProduct.add(dto);
+
+                    products.add(dto);
 
                 }
             }
@@ -59,6 +52,8 @@ public class ProductDAO {
                 con.close();
             }
         }
-        return null;
+        return products;
     }
+
+
 }

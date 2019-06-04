@@ -1,44 +1,38 @@
 package com.nhannt.snef.model;
 
-import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "productflashsales")
-public class ProductFlashSales {
+public class ProductFlashSales implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "productflashsalesid")
     private int productflashsalesid;
 
-    @Column(name = "discount")
     private int discount;
 
-    @Column(name = "startdate")
     private String startdate;
 
-    @Column(name = "enddate")
     private String enddate;
 
-    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "productitemid")
     private int productitemid;
 
-    @Column(name = "accountid")
     private int accountid;
+
+    private float price;
 
     public ProductFlashSales() {
     }
 
-    public ProductFlashSales(int discount, String startdate, String enddate, int quantity, int productitemid, int accountid) {
+    public ProductFlashSales
+            (int productflashsalesid,int discount, String startdate, String enddate, int quantity, int productitemid, int accountid, float price) {
+        this.productflashsalesid = productflashsalesid;
         this.discount = discount;
         this.startdate = startdate;
         this.enddate = enddate;
         this.quantity = quantity;
         this.productitemid = productitemid;
         this.accountid = accountid;
+        this.price = price;
     }
 
     public int getProductflashsalesid() {
@@ -95,5 +89,13 @@ public class ProductFlashSales {
 
     public void setAccountid(int accountid) {
         this.accountid = accountid;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }
