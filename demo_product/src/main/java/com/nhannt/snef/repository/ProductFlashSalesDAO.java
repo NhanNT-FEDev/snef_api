@@ -23,7 +23,7 @@ public class ProductFlashSalesDAO implements Serializable {
             con = MyConnection.myConnection();
             if (con !=null){
                 String sql =
-                        "SELECT fs.productflashsalesid, fs.discount, fs.startdate, fs.enddate, fs.quantity, fs.productitemid, fs.accountid, p.price, p.productitemname " +
+                        "SELECT fs.productflashsalesid, fs.discount, fs.startdate, fs.enddate, fs.quantity, fs.productitemid, fs.accountid, p.price, p.productitemname, p.productimage " +
                         "FROM ProductFlashSales fs, productitem p " +
                         "WHERE fs.productitemid = p.productitemid " +
                         "AND CONVERT(DATE , GETDATE()) >= fs.startdate AND CONVERT(DATE, fs.enddate) <= CONVERT(DATE, GETDATE())";
@@ -39,8 +39,9 @@ public class ProductFlashSalesDAO implements Serializable {
                     int accountid = rs.getInt("accountid");
                     float price = rs.getFloat("price");
                     String itemName = rs.getString("productitemname");
+                    String image = rs.getString("productimage");
 
-                    ProductFlashSales dto = new ProductFlashSales(fsId, discount, startdate, enddate, quantity, productitemid, accountid, price, itemName);
+                    ProductFlashSales dto = new ProductFlashSales(fsId, discount, startdate, enddate, quantity, productitemid, accountid, price, itemName, image);
                     if (flashSales == null){
                         flashSales = new ArrayList<>();
                     }
