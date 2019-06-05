@@ -23,7 +23,7 @@ public class ProductItemDAO implements Serializable {
             con = MyConnection.myConnection();
             if (con !=null){
                 String sql =
-                        "SELECT p.productitemid, p.quantity, p.price, p.productitemname, p.expireddate, p.accountid, p.productid " +
+                        "SELECT p.productitemid, p.quantity, p.price, p.productitemname, p.expireddate, p.accountid, p.productid, p.productimage " +
                         "FROM dbo.productitem p ";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
@@ -35,8 +35,9 @@ public class ProductItemDAO implements Serializable {
                     String expireddate = rs.getString("expireddate");
                     int accountid = rs.getInt("accountid");
                     int productid = rs.getInt("productid");
+                    String image = rs.getString("productimage");
 
-                    ProductItem dto = new ProductItem(proItemId, quantity, price, proItemName, expireddate, accountid, productid);
+                    ProductItem dto = new ProductItem(proItemId, quantity, price, proItemName, expireddate, accountid, productid, image);
                     if (items == null){
                         items = new ArrayList<>();
                     }
@@ -68,7 +69,7 @@ public class ProductItemDAO implements Serializable {
         try {
             con = MyConnection.myConnection();
             if (con !=null){
-                String sql = "SELECT p.productitemid, p.quantity, p.price, p.productitemname, p.expireddate, p.accountid, p.productid " +
+                String sql = "SELECT p.productitemid, p.quantity, p.price, p.productitemname, p.expireddate, p.accountid, p.productid, p.productimage " +
                         "FROM productitem p " +
                         "WHERE p.productitemid = ? ";
                 stm = con.prepareStatement(sql);
@@ -82,7 +83,8 @@ public class ProductItemDAO implements Serializable {
                     String expireddate = rs.getString("expireddate");
                     int accountid = rs.getInt("accountid");
                     int productid = rs.getInt("productid");
-                    ProductItem dto = new ProductItem(productitemid, quantity, price, proItemName, expireddate, accountid, productid);
+                    String productimage = rs.getString("productimage");
+                    ProductItem dto = new ProductItem(productitemid, quantity, price, proItemName, expireddate, accountid, productid, productimage);
                     if (proId == null){
                         proId = new ArrayList<>();
                     }

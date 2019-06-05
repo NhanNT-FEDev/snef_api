@@ -19,10 +19,13 @@ public class ProductItem implements Serializable {
 
     private int productid;
 
+    private String productimage;
+
     public ProductItem() {
     }
 
-    public ProductItem(int productitemid, int quantity, float price, String productitemname, String expireddate, int accountid, int productid) {
+    public ProductItem(int productitemid, int quantity, float price, String productitemname, String expireddate, int accountid, int productid, String productimage) {
+
         this.productitemid = productitemid;
         this.quantity = quantity;
         this.price = price;
@@ -30,6 +33,7 @@ public class ProductItem implements Serializable {
         this.expireddate = expireddate;
         this.accountid = accountid;
         this.productid = productid;
+        this.productimage = productimage;
     }
 
     public int getProductitemid() {
@@ -86,5 +90,13 @@ public class ProductItem implements Serializable {
 
     public void setProductid(int productid) {
         this.productid = productid;
+    }
+
+    public String getProductimage() {
+        return productimage;
+    }
+
+    public void setProductimage(String productimage) {
+        this.productimage = productimage;
     }
 }
