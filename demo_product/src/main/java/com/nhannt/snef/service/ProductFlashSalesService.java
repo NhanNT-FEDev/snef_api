@@ -16,9 +16,23 @@ public class ProductFlashSalesService {
     @Autowired
     ProductFlashSalesDAO faSalesDAO = new ProductFlashSalesDAO();
 
-    @RequestMapping(method = RequestMethod.GET, path = "/fs", produces = "application/json")
-    public List<ProductFlashSales> getAllFS() throws SQLException, ClassNotFoundException{
-        List<ProductFlashSales> rs = faSalesDAO.loadAllFS();
+    @RequestMapping(method = RequestMethod.GET, path = "/flashsales/today", produces = "application/json")
+    public List<ProductFlashSales> getByToday() throws SQLException, ClassNotFoundException{
+        List<ProductFlashSales> rs = faSalesDAO.loadFsToDay();
+        System.out.println(rs.size());
+        return rs;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/flashsales/tomorrow", produces = "application/json")
+    public List<ProductFlashSales> getByTomorrow() throws SQLException, ClassNotFoundException{
+        List<ProductFlashSales> rs = faSalesDAO.loadFsTomoroww();
+        System.out.println(rs.size());
+        return rs;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/flashsales/next", produces = "application/json")
+    public List<ProductFlashSales> getByNext() throws SQLException, ClassNotFoundException{
+        List<ProductFlashSales> rs = faSalesDAO.loadFsNext();
         System.out.println(rs.size());
         return rs;
     }
