@@ -20,11 +20,13 @@ public class ProductFlashSales implements Serializable {
 
     private float price;
 
+    private String itemName;
+
     public ProductFlashSales() {
     }
 
     public ProductFlashSales
-            (int productflashsalesid,int discount, String startdate, String enddate, int quantity, int productitemid, int accountid, float price) {
+            (int productflashsalesid,int discount, String startdate, String enddate, int quantity, int productitemid, int accountid, float price, String itemName) {
         this.productflashsalesid = productflashsalesid;
         this.discount = discount;
         this.startdate = startdate;
@@ -33,6 +35,7 @@ public class ProductFlashSales implements Serializable {
         this.productitemid = productitemid;
         this.accountid = accountid;
         this.price = price;
+        this.itemName = itemName;
     }
 
     public int getProductflashsalesid() {
@@ -97,5 +100,13 @@ public class ProductFlashSales implements Serializable {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }
