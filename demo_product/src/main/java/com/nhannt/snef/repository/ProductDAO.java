@@ -16,6 +16,9 @@ import java.util.List;
 @Repository
 public class ProductDAO implements Serializable {
 
+    /*
+    * Load all Product using dbo.Product
+    * */
     public List<Product> loadAllProduct() throws SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -55,5 +58,78 @@ public class ProductDAO implements Serializable {
         return products;
     }
 
+    /*
+    * Search Product name using dbo.product
+    * */
+
+    public List<Product> searchProByName(String proName) throws SQLException, ClassNotFoundException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<Product> searchValue = null;
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "SELECT p.productid, p.productname, p.description, p.picture,p.categoriesid " +
+                        "FROM Product p " +
+                        "WHERE p.productname LIKE ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + proName + "%");
+                rs = stm.executeQuery();
+                while (rs.next()){
+                    int proId = rs.getInt("productid");
+                    String productname = rs.getString("productname");
+                    String des = rs.getString("description");
+                    String pic = rs.getString("picture");
+                    int cate = rs.getInt("categoriesid");
+
+                    Product dto = new Product(proId, productname, des, pic, cate);
+                    if (searchValue == null){
+                        searchValue = new ArrayList<>();
+                    }
+                    searchValue.add(dto);
+                }
+                return searchValue;
+            }
+        }finally {
+            if (rs != null) rs.close();
+            if (stm != null) stm.close();
+            if (con != null) con.close();
+        }
+        return null;
+    }
+
+    /*
+     * Create new product using dbo.product
+     * */
+
+    public boolean createNewProduct(Product product) throws SQLException, ClassNotFoundException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql = "INSERT INTO dbo.Product(productname,description,picture,categoriesid) " +
+                        "VALUES(?, ?, ?,?) ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, product.getProductname());
+                stm.setString(2, product.getDescription());
+                stm.setString(3, product.getPicture());
+                stm.setInt(4, product.getCategoriesid());
+                int row = stm.executeUpdate();
+                if (row > 0){
+                    return true;
+                }
+            }
+        }finally {
+            if (rs != null) rs.close();
+            if (stm != null) stm.close();
+            if (con != null) con.close();
+        }
+
+        return false;
+    }
 
 }

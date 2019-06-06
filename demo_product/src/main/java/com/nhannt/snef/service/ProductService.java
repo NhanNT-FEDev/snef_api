@@ -3,12 +3,12 @@ package com.nhannt.snef.service;
 import com.nhannt.snef.model.Product;
 import com.nhannt.snef.repository.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProductService {
@@ -16,12 +16,45 @@ public class ProductService {
     @Autowired
     ProductDAO proDao = new ProductDAO();
 
-    @RequestMapping(method = RequestMethod.GET, path = "/GetProduct", produces = "application/json")
+    /*
+    * Get ALL Product API
+    * */
+    @RequestMapping(method = RequestMethod.GET, path = "/products", produces = "application/json")
     public List<Product> getAllPro() throws SQLException, ClassNotFoundException {
 
         List<Product> getList = proDao.loadAllProduct();
         System.out.println(getList.size());
         return getList;
+    }
+
+    /*
+     * Get Product Name API
+     * */
+
+    @RequestMapping(method = RequestMethod.GET, value = "products/{name}", produces = "application/json")
+    public List<Product> getProName(@PathVariable String name) throws SQLException, ClassNotFoundException{
+        System.out.println("name: " + name);
+        List<Product> getListName = proDao.searchProByName(name);
+        System.out.println(getListName.size());
+        return getListName;
+    }
+
+    /**
+     *Create new product in table dbo.product
+     *
+     */
+    @PostMapping(value = "/products/create")
+
+    public boolean createNewProduct(@Valid @RequestBody Product product) throws SQLException, ClassNotFoundException {
+        String proName = product.getProductname();
+        String des = product.getDescription();
+        String pic = product.getPicture();
+        int cate = product.getCategoriesid();
+
+        boolean result = proDao.createNewProduct(new Product(proName, des, pic, cate));
+        System.out.println(result);
+
+        return true;
     }
 
 }
