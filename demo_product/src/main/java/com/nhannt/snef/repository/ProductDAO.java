@@ -100,7 +100,7 @@ public class ProductDAO implements Serializable {
     }
 
     /*
-     * Create new product using dbo.product
+     * Udate product by Id using dbo.product table
      * */
 
     public boolean createNewProduct(Product product) throws SQLException, ClassNotFoundException{
@@ -129,6 +129,45 @@ public class ProductDAO implements Serializable {
             if (con != null) con.close();
         }
 
+        return false;
+    }
+
+
+    /*
+     * Create new product using dbo.product
+     * */
+
+    public boolean updateProById(int proId, String proName, String des, String pic, int cate) throws SQLException, ClassNotFoundException{
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            con = MyConnection.myConnection();
+            if (con != null){
+                String sql =
+                        "UPDATE dbo.Product " +
+                                "SET productname = ?, description = ?, picture = ?, categoriesid = ? " +
+                        "WHERE productid = ?";
+
+                stm = con.prepareStatement(sql);
+
+                stm.setString(1, proName);
+                stm.setString(2, des);
+                stm.setString(3, pic);
+                stm.setInt(4, cate);
+                stm.setInt(5, proId);
+                int row = stm.executeUpdate();
+                if (row > 0){
+                    return true;
+                }
+            }
+        }finally {
+            if (rs != null) rs.close();
+            if (stm != null) stm.close();
+            if (con != null) con.close();
+        }
         return false;
     }
 

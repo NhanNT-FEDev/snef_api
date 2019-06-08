@@ -40,11 +40,11 @@ public class ProductService {
     }
 
     /**
-     *Create new product in table dbo.product
-     *
+     * Create new product in table dbo.product
+     * Method Post
+     * Path: /products/create
      */
     @PostMapping(value = "/products/create")
-
     public boolean createNewProduct(@Valid @RequestBody Product product) throws SQLException, ClassNotFoundException {
         String proName = product.getProductname();
         String des = product.getDescription();
@@ -57,4 +57,20 @@ public class ProductService {
         return true;
     }
 
+    /**
+     * Update product by Id in table dbo.product
+     * Method Post, path: /products/update
+     */
+    @PostMapping(value = "/products/update", produces = "application/json")
+    public boolean updateProById(@Valid @RequestBody Product product) throws SQLException, ClassNotFoundException {
+        int proId = product.getProductid();
+        String proName = product.getProductname();
+        String des = product.getDescription();
+        String pic = product.getPicture();
+        int cate = product.getCategoriesid();
+
+        boolean rs = proDao.updateProById(proId,proName,des, pic, cate);
+
+        return true;
+    }
 }
